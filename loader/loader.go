@@ -1,59 +1,56 @@
 package loader
 
 import (
-	"bufio"
-	"fmt"
-	"os"
+	"bytes"
+	_ "embed"
+	"strconv"
 )
 
 const (
-	FIVE          = "./5words.txt"
-	LETTER_SCORES = "./letterFrequency.txt"
+	FIVE         = "./5words.txt"
+	LetterScores = "./letterFrequency.txt"
 )
 
+//go:embed 5words.txt
+var fiveLetterWordsFile []byte
+
+//go:embed letterFrequency.txt
+var letterFrequencyFile []byte
+
 func LoadFiveLetterWords() ([]string, error) {
-	file, err := os.Open(FIVE)
+	return bytesToStrings(splitLines(fiveLetterWordsFile)), nil
+}
 
-	if err != nil {
-		return nil, err
-	}
-
-	scanner := bufio.NewScanner(file)
-
-	scanner.Split(bufio.ScanLines)
-
-	result := make([]string, 0, 16)
-	for scanner.Scan() {
-		result = append(result, scanner.Text())
+func LoadLetterScores() (map[byte]float32, error) {
+	sep := []byte(" ")
+	lines := splitLines(letterFrequencyFile)
+	result := make(map[byte]float32)
+	for _, line := range lines {
+		parts := bytes.Split(line, sep)
+		freq, err := strconv.ParseFloat(string(parts[1]), 32)
+		if err != nil {
+			return nil, err
+		}
+		result[parts[0][0]] = float32(freq)
 	}
 
 	return result, nil
 }
 
-func LoadLetterScores() (map[byte]float32, error) {
-	file, err := os.Open(LETTER_SCORES)
+func splitLines(file []byte) [][]byte {
+	noCR := bytes.ReplaceAll(file, []byte("\r\n"), []byte("\n"))
+	lines := bytes.Split(noCR, []byte("\n"))
+	return lines
+}
 
-	if err != nil {
-		return nil, err
-	}
-
-	scanner := bufio.NewScanner(file)
-
-	scanner.Split(bufio.ScanLines)
-
-	result := make(map[byte]float32)
-	for scanner.Scan() {
-		var letter string
-		var score float32
-
-		count, err := fmt.Sscan(scanner.Text(), &letter, &score)
-
-		if count != 2 {
-			return nil, err
+func bytesToStrings(lines [][]byte) []string {
+	result := make([]string, 0, len(lines))
+	for _, l := range lines {
+		s := string(l)
+		if s == "" {
+			continue
 		}
-
-		result[letter[0]] = score
+		result = append(result, s)
 	}
-
-	return result, nil
+	return result
 }
