@@ -53,6 +53,12 @@ var commands = []*command{
 		handleSort,
 		"Sorts the possible answers based on their most used letters in alphabet.",
 	},
+	{
+		[]string{"sortAlpha", "sorta"},
+		[]string{},
+		handleSortAlpha,
+		"Sorts the possible answers in alphabetical order",
+	},
 }
 
 func RunCLI() {
@@ -176,8 +182,15 @@ func handleHelp(h *helper.Helper, _ []string) error {
 
 func handleSort(h *helper.Helper, _ []string) error {
 	h.Answers = sort.Sort(h.Answers, func(a, b *list.Element) bool {
-		// return int(a.Value.(string)[4])-int(b.Value.(string)[4]) >= 0
 		return h.WordScoreOf(a.Value.(string)) >= h.WordScoreOf(b.Value.(string))
+	})
+	fmt.Printf("Answers sorted.\n\n")
+	return nil
+}
+
+func handleSortAlpha(h *helper.Helper, _ []string) error {
+	h.Answers = sort.Sort(h.Answers, func(a, b *list.Element) bool {
+		return strings.Compare(a.Value.(string), b.Value.(string)) < 0
 	})
 	fmt.Printf("Answers sorted.\n\n")
 	return nil
