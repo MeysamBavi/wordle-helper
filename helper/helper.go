@@ -73,8 +73,11 @@ func (h *Helper) filter() {
 func (h *Helper) WordScoreOf(word string) float32 {
 	word = strings.ToUpper(word)
 	var sum float32 = 0
+	occurrences := make(map[byte]int)
 	for i := 0; i < len(word); i++ {
-		sum += h.letterScores[word[i]]
+		occurrences[word[i]] += 1
+		coefficient := occurrences[word[i]]
+		sum += h.letterScores[word[i]] / (float32(coefficient) * 0.25)
 	}
 	return sum
 }
