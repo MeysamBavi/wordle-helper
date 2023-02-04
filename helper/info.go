@@ -35,6 +35,7 @@ func GetColors(answer, guess string) string {
 			if answerChars[j] == guess[i] {
 				colors[i] = YELLOW
 				answerChars[j] = 0
+				break
 			}
 		}
 	}
