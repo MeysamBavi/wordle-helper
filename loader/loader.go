@@ -6,11 +6,6 @@ import (
 	"strconv"
 )
 
-const (
-	FIVE         = "./5words.txt"
-	LetterScores = "./letterFrequency.txt"
-)
-
 //go:embed 5words.txt
 var fiveLetterWordsFile []byte
 
