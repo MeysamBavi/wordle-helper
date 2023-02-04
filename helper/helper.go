@@ -13,28 +13,24 @@ type Helper struct {
 }
 
 func New(all []string, letterScores map[byte]float32) *Helper {
-	return &Helper{
+	h := &Helper{
 		all:          all,
 		guesses:      nil,
 		Answers:      nil,
 		letterScores: letterScores,
 	}
+	h.Reset()
+	return h
 }
 
 func (h *Helper) Reset() {
 	h.guesses = nil
 	h.Answers = nil
+	h.initializeAnswers()
 }
 
 func (h *Helper) AddGuess(guess *Info) {
-
 	h.guesses = append(h.guesses, guess)
-
-	if len(h.guesses) == 1 {
-		h.initializeAnswers()
-		return
-	}
-
 	h.filter()
 }
 
@@ -43,14 +39,9 @@ func (h *Helper) getLastInfo() *Info {
 }
 
 func (h *Helper) initializeAnswers() {
-
-	info := h.getLastInfo()
 	h.Answers = list.New()
-
 	for _, word := range h.all {
-		if info.Validate(word) {
-			h.Answers.PushBack(word)
-		}
+		h.Answers.PushBack(word)
 	}
 }
 

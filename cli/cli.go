@@ -87,7 +87,7 @@ func RunCLI() {
 	reader := bufio.NewReader(os.Stdin)
 	command, err := reader.ReadString('\n')
 
-	for err == nil && command != "end" && command != "" {
+	for err == nil && command != "" {
 		if err := handleCommand(h, strings.Fields(command)); err != nil {
 			fmt.Println(err)
 			fmt.Println()
