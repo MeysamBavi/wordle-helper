@@ -1,4 +1,4 @@
-module wordle-helper
+module github.com/MeysamBavi/wordle-helper
 
 go 1.18
 

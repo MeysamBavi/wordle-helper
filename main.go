@@ -1,6 +1,6 @@
 package main
 
-import "wordle-helper/cli"
+import "github.com/MeysamBavi/wordle-helper/cli"
 
 func main() {
 	cli.RunCLI()

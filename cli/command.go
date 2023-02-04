@@ -1,8 +1,8 @@
 package cli
 
 import (
+	"github.com/MeysamBavi/wordle-helper/helper"
 	"strings"
-	"wordle-helper/helper"
 )
 
 type command struct {

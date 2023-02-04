@@ -1,9 +1,9 @@
 package helper_test
 
 import (
+	"github.com/MeysamBavi/wordle-helper/helper"
 	"github.com/stretchr/testify/assert"
 	"testing"
-	"wordle-helper/helper"
 )
 
 type getColorsTestCase struct {

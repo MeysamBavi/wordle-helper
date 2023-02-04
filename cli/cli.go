@@ -4,12 +4,12 @@ import (
 	"bufio"
 	"container/list"
 	"fmt"
+	"github.com/MeysamBavi/wordle-helper/helper"
+	"github.com/MeysamBavi/wordle-helper/loader"
+	"github.com/MeysamBavi/wordle-helper/sort"
 	"os"
 	"strconv"
 	"strings"
-	"wordle-helper/helper"
-	"wordle-helper/loader"
-	"wordle-helper/sort"
 )
 
 const (
