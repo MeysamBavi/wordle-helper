@@ -59,6 +59,12 @@ var commands = []*command{
 		handleSortAlpha,
 		"Sorts the possible answers in alphabetical order",
 	},
+	{
+		[]string{"exit", "quit"},
+		[]string{},
+		handleExit,
+		"Exits the program.",
+	},
 }
 
 func RunCLI() {
@@ -193,5 +199,10 @@ func handleSortAlpha(h *helper.Helper, _ []string) error {
 		return strings.Compare(a.Value.(string), b.Value.(string)) < 0
 	})
 	fmt.Printf("Answers sorted.\n\n")
+	return nil
+}
+
+func handleExit(_ *helper.Helper, _ []string) error {
+	os.Exit(0)
 	return nil
 }
